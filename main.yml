@@ -1,0 +1,14 @@
+---
+- name: Initial copying file 
+  hosts: all
+
+  roles:
+          - common
+
+- name: Install and deploy Apache
+  hosts: web
+  become: true
+  become_method: sudo
+
+  roles:
+          - web  

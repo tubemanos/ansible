@@ -1,0 +1,24 @@
+---
+# Install http server 
+- name: Update the repo
+  become: true
+  become_method: sudo
+  yum:
+          update_cache: yes
+
+ 
+- name: Install Apache Web server
+  become: true
+  become_method: sudo
+  yum: name=httpd state=present
+
+- name: Copy myhome page to servers
+  become_method: sudo
+  become: true
+  copy: src={{src_file}} dest={{dest_file}} mode=0555
+  notify: restart httpd
+          
+- name: Start WebServer and enable on boot
+  become_method: sudo
+  become: true
+  service: name=httpd state=started enabled=yes

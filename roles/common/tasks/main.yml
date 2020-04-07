@@ -1,0 +1,17 @@
+---
+- name: Add user alxst to group ""wheel""
+  user: name=alxst groups=wheel append=yes state=present createhome=yes
+  become: true
+  become_method: sudo
+  #  become_user: psxt
+
+- name: Create folder
+  file:
+          path: /home/alxst/test
+          state: directory
+  tags: folder, create
+
+- name: Copy file to server
+  tags: copy
+  copy: src=something.txt dest=/home/alxst/test/something.txt
+     

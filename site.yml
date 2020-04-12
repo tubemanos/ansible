@@ -1,0 +1,37 @@
+---
+- name: Preprovisioning
+  hosts: all
+  remote_user: alxst
+  become: yes
+  become_method: sudo
+
+  roles:
+    - common
+
+- name: Install Web
+  hosts: web
+  remote_user: alxst
+  become: yes
+  become_method: sudo
+
+  roles:
+    - nginx
+    - php-fpm
+
+- name: Deploy Worpress
+  hosts: web
+  remote_user: alxst
+  become: yes
+  become_method: sudo
+
+  roles:
+    - wordpress
+
+- name: Install MySQL
+  hosts: db
+  remote_user: alxst
+  become: yes
+  become_method: sudo
+  
+  roles:
+    - mysql

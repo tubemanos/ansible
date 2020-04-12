@@ -1,17 +1,10 @@
 ---
-- name: Add user alxst to group ""wheel""
-  user: name=alxst groups=wheel append=yes state=present createhome=yes
-  become: true
-  become_method: sudo
-  #  become_user: psxt
+- name: Set up iptables rules
+  copy: src=iptables-save dest=/etc/sysconfig/iptables
+  notify: restart iptables
 
-- name: Create folder
-  file:
-          path: /home/alxst/test
-          state: directory
-  tags: folder, create
-
-- name: Copy file to server
-  tags: copy
-  copy: src=something.txt dest=/home/alxst/test/something.txt
-     
+- name: Install Python package
+  apt: name={{ item }} state=present
+  with_items:
+   - python
+   - iptables

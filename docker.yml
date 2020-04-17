@@ -1,7 +1,6 @@
 ---
 - name: Docker installing
   hosts: docker
-  become: yes
   
   roles:
     - docker

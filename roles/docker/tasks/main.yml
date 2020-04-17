@@ -1,11 +1,11 @@
 ---
 
-- name: Install required system packages for Debain Like distros
+- name: Install required system packages for Debain like distros
       apt: name={{ item }} state=latest update_cache=yes
       loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools'] 
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'  
 
 - name: Install required system packages for RedHat like distros 
-      apt: name={{ item }} state=latest update_cache=yes
+      yum: name={{ item }} state=latest update_cache=yes
       loop: [ 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

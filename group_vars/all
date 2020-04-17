@@ -24,3 +24,14 @@ auto_up_disable: false
 #false = Development, minor, and major updates are all disabled
 #minor = Minor updates are enabled, development, and major updates are disabled
 core_update_level: true
+
+
+CTOP_VERSION: "0.7.3"
+DOCKER_COMPOSE_VERSION: "1.25.1"
+DOCKER_PACKAGES:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+USER: "YOUR_USER_ON_THE_REMOTE_SERVER"

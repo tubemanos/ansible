@@ -3,17 +3,16 @@
 wp_version: 4.2.4
 wp_sha256sum: 42ca594afc709cbef8528a6096f5a1efe96dcf3164e7ce321e87d57ae015cc82
 
-# These are the WordPress database settings
+# WordPress database settings
 wp_db_name: wordpress 
 wp_db_user: wordpress
 wp_db_password: secret
 
-# You shouldn't need to change this.
 mysql_port: 3306
 
 # This is used for the nginx server configuration, but access to the
 # WordPress site is not restricted by a named host.
-server_hostname: www.example.com
+server_hostname: www.pico.org
 
 # Disable All Updates
 # By default automatic updates are enabled, set this value to true to disable all automatic updates
@@ -26,12 +25,30 @@ auto_up_disable: false
 core_update_level: true
 
 
-CTOP_VERSION: "0.7.3"
-DOCKER_COMPOSE_VERSION: "1.25.1"
-DOCKER_PACKAGES:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg-agent
-      - software-properties-common
-USER: "YOUR_USER_ON_THE_REMOTE_SERVER"
+# Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+docker_edition: 'ce'
+docker_package: "docker-{{ docker_edition }}"
+docker_package_state: present
+
+# Service options.
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+# Docker Compose options.
+docker_install_compose: true
+docker_compose_version: "1.25.4"
+docker_compose_path: /usr/local/bin/docker-compose
+
+# Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+docker_apt_release_channel: stable
+docker_apt_arch: amd64
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: true
+docker_apt_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+
+# Used only for RedHat/CentOS/Fedora.
+docker_yum_repo_url: https://download.docker.com/linux/{{ (ansible_distribution == "Fedora") | ternary("fedora","centos") }}/docker-{{ docker_edition }}.repo
+docker_yum_repo_enable_edge: '0'
+docker_yum_repo_enable_test: '0'
+docker_yum_gpg_key: https://download.docker.com/linux/centos/gpg

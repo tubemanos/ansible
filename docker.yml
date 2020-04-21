@@ -2,6 +2,9 @@
 - name: Docker installing
   hosts: docker
   become: yes
+  become_method: sudo
   
   roles:
     - docker
+
+    
